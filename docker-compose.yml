@@ -10,26 +10,163 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     container_name: "db"
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
 
   # Backend, ktory si docker-compose vybuildi z Dockerfile ktory sa nachadza v /backend priecinku
-  backend:
-    # Miesto kde sa nachadza Dockerfile
-    build: ./backend
-    # Namapuje <host port>:<internal port> - takze v kontajneri ked ti server bezi na 8080 tak na host pc ti tiez bude bezat na 8080
-    ports:
-      - "3030:3030"
-    # Vraj by sa mal tento kontajner zapnut az potom co bezi DB (not sure)
-    depends_on:
-      - db
-    # Da backend a db na jednu "siet", takze backend bude moct komunikovat s db bez toho aby cela db bola expostnuta
-    links:
-      - db
 
-  # To iste plati pre frontend
-  frontend:
-    build: ./frontend
-    ports:
-      - "80:8080"
+
+
+
+
+
+
+  # backend:
+
+
+
+
+
+
+
+  #   # Miesto kde sa nachadza Dockerfile
+
+
+
+
+
+
+
+  #   build: ./backend
+
+
+
+
+
+
+
+  #   # Namapuje <host port>:<internal port> - takze v kontajneri ked ti server bezi na 8080 tak na host pc ti tiez bude bezat na 8080
+
+
+
+
+
+
+
+  #   ports:
+
+
+
+
+
+
+
+  #     - "3030:3030"
+
+
+
+
+
+
+
+  #   # Vraj by sa mal tento kontajner zapnut az potom co bezi DB (not sure)
+
+
+
+
+
+
+
+  #   depends_on:
+
+
+
+
+
+
+
+  #     - db
+
+
+
+
+
+
+
+  #   # Da backend a db na jednu "siet", takze backend bude moct komunikovat s db bez toho aby cela db bola expostnuta
+
+
+
+
+
+
+
+  #   links:
+
+
+
+
+
+
+
+  #     - db
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # # To iste plati pre frontend
+
+
+
+
+
+
+
+  # frontend:
+
+
+
+
+
+
+
+  #   build: ./frontend
+
+
+
+
+
+
+
+  #   ports:
+
+
+
+
+
+
+
+  #     - "80:8080"
+
+
+
+
+
+
+
 
   adminer:
     image: "adminer:latest"
