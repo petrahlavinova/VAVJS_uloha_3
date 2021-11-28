@@ -25,6 +25,7 @@ app.use(cors({
     methods: '*',
     allowedHeaders: '*'
 }))
+app.use('/images', express.static('images'))
 
 Product.init({
     name: Sequelize.STRING,
