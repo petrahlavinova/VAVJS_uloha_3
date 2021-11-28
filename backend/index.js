@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-const {Sequelize} = require('sequelize')
+const {Sequelize} = require('sequelize');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 class Order extends Sequelize.Model{}
 class Customer extends Sequelize.Model{}
 class Advert extends Sequelize.Model{}
@@ -9,6 +11,7 @@ class Product extends Sequelize.Model{}
 const db = new Sequelize('zahradkarske_potreby','root','root',{
     host: 'localhost', // pri dockerizovani db ?
     dialect: 'mysql',
+    logging: false,
     pool: {
         max: 5,
         min: 0,
@@ -16,35 +19,41 @@ const db = new Sequelize('zahradkarske_potreby','root','root',{
         idle: 10000
     }
 })
+app.use(bodyParser.json())
+app.use(cors({
+    origin: '*',
+    methods: '*',
+    allowedHeaders: '*'
+}))
 
 Product.init({
-    nazov: Sequelize.STRING,
-    cena: Sequelize.FLOAT,
-    obrazok: Sequelize.STRING
+    name: Sequelize.STRING,
+    price: Sequelize.FLOAT,
+    image: Sequelize.STRING
 },{
     sequelize: db,
     modelName: 'product'
 });
 Advert.init({
     link: Sequelize.STRING,
-    obrazok: Sequelize.STRING,
-    pocitadlo: Sequelize.INTEGER
+    image: Sequelize.STRING,
+    counter: Sequelize.INTEGER
 },{
     sequelize: db,
     modelName: 'advert'
 });
 Customer.init({
     email: Sequelize.STRING,
-    celeMeno: Sequelize.STRING,
-    ulica: Sequelize.STRING,
-    telCislo: Sequelize.STRING,
+    name: Sequelize.STRING,
+    street: Sequelize.STRING,
+    phoneNumber: Sequelize.STRING,
     psc: Sequelize.STRING,
 },{
     sequelize: db,
     modelName: 'customer'
 });
 Order.init({
-    celkoveCena: Sequelize.FLOAT,
+    finalPrice: Sequelize.FLOAT,
     status: Sequelize.STRING
 },{
     sequelize: db,
@@ -72,15 +81,30 @@ app.listen(3030, ()=>{
 });
 
 (async function(){
-    await db.sync();
+    await db.sync({force: true});
     await Product.create({
-        nazov: 'Kvetinka',
-        cena: 1.89,
-        obrazok: 'hihihi.jpg'
+        name: 'Kvetinka',
+        price: 1.89,
+        image: 'hihihi.jpg'
     })
-    console.log(await Product.findOne({
-        where: {
-            id:1
-        }
-    }))
+    await Product.create({
+        name: 'Kaktus',
+        price: 1.50,
+        image: 'kaktus.jpg'
+    })
+    await Product.create({
+        name: 'Zemina',
+        price: 1.19,
+        image: 'zemina.jpg'
+    })
+    // console.log(await Product.findOne({
+    //     where: {
+    //         id:1
+    //     }
+    // }))
 })();
+
+app.get('/products', async(req,res)=>{
+    let products = await Product.findAll({});
+    return res.status(200).json(products);
+});
