@@ -1,0 +1,12 @@
+.product-block{
+    border: 1px dashed #008000;
+    margin: 10px;
+    width: 400px;
+    padding: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+

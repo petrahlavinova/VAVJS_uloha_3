@@ -5,8 +5,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Advert from "./Pages/Advert";
 import Cart from "./Pages/Cart";
+import Order from "./Pages/Order";
 import Products from "./Pages/Products";
+import './App.css';
 
 export default function App() {
   return (
@@ -28,6 +31,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Products/>}/>
           <Route path="/cart" element={<Cart/>}/>
+          <Route path="/order" element={<Order/>}/>
+          <Route path="/advert" element={<Advert/>}/>
         </Routes>
       </div>
     </Router>

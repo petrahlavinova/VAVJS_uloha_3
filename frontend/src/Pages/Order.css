@@ -1,0 +1,35 @@
+.label-order{
+    color: #00ba00;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.input-block{
+    border: 1px dashed #008000;
+    margin: 10px;
+    width: 400px;
+    padding: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title-order{
+    color: #00ba00;
+    margin-left: 20px;
+    text-decoration: underline;
+}
+
+#button-order{
+    padding: 20px;
+}
+
+#center-order{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

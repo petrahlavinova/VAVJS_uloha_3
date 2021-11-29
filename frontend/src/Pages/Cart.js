@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 
 function Cart() {
+  const navigate = useNavigate()
   const [cart, setCart] = useState([]);
   const [elements, setElements] = useState([]);
   const removeFromCart = (x)=>{
@@ -42,7 +44,18 @@ function Cart() {
     <div>
       <div>
         <h1>Košík</h1>
-        {elements}
+        {cart.length === 0 && 
+          <>
+            <h2>Košík je prázdny</h2>
+            <img src="http://localhost:3030/images/kosik.png" width="200" alt='kosik'/>
+          </>
+        }
+        {cart.length > 0 && 
+          <>
+            {elements}
+            <button onClick={()=>navigate('/order')}>Dokončiť objednávku</button>
+          </>
+        }
       </div>
     </div>
   );

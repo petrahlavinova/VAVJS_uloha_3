@@ -33,7 +33,7 @@ function Products() {
             acc+= val.amount;
             return acc;
         },0)}</h1>
-        <div>
+        <div className="product-wrapper">
             {products}
         </div>
     </div>
