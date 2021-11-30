@@ -1,6 +1,8 @@
 .product-block{
     border: 1px dashed #008000;
+    color: #00ba00;
     margin: 10px;
+    height: 400px;
     width: 400px;
     padding: 10px;
     padding-bottom: 10px;

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js --timeout 10000",
+    "start": "nodemon index.js",
+    "prod": "node index.js"
   },
   "author": "Petra Hlavinová",
   "license": "ISC",
@@ -12,7 +14,9 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mocha": "^9.1.3",
     "mysql2": "^2.3.3",
+    "node-fetch": "^2.6.6",
     "sequelize": "^6.12.0-alpha.1"
   }
 }

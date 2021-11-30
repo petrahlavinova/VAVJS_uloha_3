@@ -8,7 +8,9 @@ function Advert() {
         counter: 0
     });
     useEffect(()=>{
-        fetch('http://localhost:3030/advert').then(d=>d.json()).then(data=>{setAdvert(data)})
+        fetch('http://localhost:3030/advert').then(d=>d.json()).then(data=>{setAdvert(data)}).catch((error)=>{
+            console.error(error);
+          });
     },[])
     return (
         <div>

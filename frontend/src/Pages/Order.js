@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import './Order.css'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 
 function Order() {
   const navigate = useNavigate()
@@ -35,6 +35,8 @@ function Order() {
   }
   return (
     <div>
+      <Link to="/" className="link-cart">Späť na produkty</Link>
+      <Link to="/cart" className="link-cart">Spať do košíka</Link>
       <div id="center-order">
         <h1 id="title-order">Objednávka</h1>
         <div className="input-block">
@@ -60,7 +62,7 @@ function Order() {
         <p>Celková suma: {cart.reduce((acc,value)=>{
                 acc+= value.price * value.amount;
                 return acc
-            },0)} EUR</p>
+            },0).toFixed(2)} EUR</p>
         <button onClick={ordering} id="button-order">Záväzne objednať</button>
       </div>
     </div>

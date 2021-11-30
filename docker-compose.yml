@@ -1,6 +1,5 @@
 version: "3.9"
 services:
-  # Toto je vyslovene z internetu len skopirovane, s tym ze som si pridal vlastny .sql init script ktory mi vytvori usera a tabulky v DB
   db:
     image: "mysql:8"
     command: --default-authentication-plugin=mysql_native_password
@@ -15,158 +14,22 @@ services:
     expose:
       - 3306
 
-  # Backend, ktory si docker-compose vybuildi z Dockerfile ktory sa nachadza v /backend priecinku
-
-
-
-
-
-
-
-  # backend:
-
-
-
-
-
-
-
-  #   # Miesto kde sa nachadza Dockerfile
-
-
-
-
-
-
-
-  #   build: ./backend
-
-
-
-
-
-
-
-  #   # Namapuje <host port>:<internal port> - takze v kontajneri ked ti server bezi na 8080 tak na host pc ti tiez bude bezat na 8080
-
-
-
-
-
-
-
-  #   ports:
-
-
-
-
-
-
-
-  #     - "3030:3030"
-
-
-
-
-
-
-
-  #   # Vraj by sa mal tento kontajner zapnut az potom co bezi DB (not sure)
-
-
-
-
-
-
-
-  #   depends_on:
-
-
-
-
-
-
-
-  #     - db
-
-
-
-
-
-
-
-  #   # Da backend a db na jednu "siet", takze backend bude moct komunikovat s db bez toho aby cela db bola expostnuta
-
-
-
-
-
-
-
-  #   links:
-
-
-
-
-
-
-
-  #     - db
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  # # To iste plati pre frontend
-
-
-
-
-
-
-
-  # frontend:
-
-
-
-
-
-
-
-  #   build: ./frontend
-
-
-
-
-
-
-
-  #   ports:
-
-
-
-
-
-
-
-  #     - "80:8080"
-
-
-
-
-
-
-
+  backend:
+    build: ./backend
+    ports:
+      # Namapuje <host port>:<internal port>
+      - "3030:3030"
+    depends_on:
+      - db
+    links:
+      # backend a db na jednu "siet", takze backend bude moct komunikovat s db bez toho aby cela db bola expostnuta
+      - db
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:8080"
 
   adminer:
     image: "adminer:latest"

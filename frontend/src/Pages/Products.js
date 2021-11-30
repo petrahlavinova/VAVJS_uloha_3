@@ -1,6 +1,6 @@
 import ProductComponent from '../Components/ProductComponent.js'
 import {useEffect, useState} from 'react'
-
+import {Link} from 'react-router-dom'
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -25,14 +25,19 @@ function Products() {
           <ProductComponent product={p} addToCart={addToCart} key={p.id+"-product"}></ProductComponent>
         )
       }))
-    }).catch();
+    }).catch((error)=>{
+      console.error(error);
+    });
   },[])
   return (
     <div>
-        <h1>Počet produktov v košíku: {cart.reduce((acc,val)=>{
-            acc+= val.amount;
-            return acc;
-        },0)}</h1>
+        <div className="link-cart">
+          <h3 style={{color:"#00ba00"}}>Počet produktov v košíku: {cart.reduce((acc,val)=>{
+              acc+= val.amount;
+              return acc;
+          },0)}</h3>
+          <Link to="/cart">Prejsť do košíka</Link>
+        </div>
         <div className="product-wrapper">
             {products}
         </div>

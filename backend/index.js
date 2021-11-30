@@ -9,7 +9,7 @@ class Advert extends Sequelize.Model{}
 class Product extends Sequelize.Model{}
 // nazov databazy, uzivatel, heslo, config objekt
 const db = new Sequelize('zahradkarske_potreby','root','root',{
-    host: 'localhost', // pri dockerizovani db ?
+    host: 'db', 
     dialect: 'mysql',
     logging: false,
     pool: {
@@ -97,22 +97,27 @@ app.listen(3030, ()=>{
     await Product.create({
         name: 'Zemina',
         price: 1.19,
-        image: 'zemina.jpg'
+        image: 'zemina.png'
     })
     await Product.create({
-        name: 'Kvetinka',
-        price: 1.89,
-        image: 'hihihi.jpg'
+        name: 'Robotická kosačka',
+        price: 844.90,
+        image: 'robo-kosacka.png'
     })
     await Product.create({
-        name: 'Kaktus',
-        price: 1.50,
-        image: 'kaktus.jpg'
+        name: 'Rýľ',
+        price: 20.99,
+        image: 'ryl.png'
     })
     await Product.create({
-        name: 'Zemina',
-        price: 1.19,
-        image: 'zemina.jpg'
+        name: 'Lopata',
+        price: 7.99,
+        image: 'lopata.png'
+    })
+    await Product.create({
+        name: 'Fúrik',
+        price: 65.59,
+        image: 'furik.png'
     })
     await Advert.create({
         link: 'https://ladypopular.sk/',
@@ -129,11 +134,6 @@ app.listen(3030, ()=>{
         image: 'https://cp.hnonline.sk/Portal/MAFRASK/Part/Img/logo-192x192.png',
         counter: 0
     })
-    // console.log(await Product.findOne({
-    //     where: {
-    //         id:1
-    //     }
-    // }))
 })();
 
 app.get('/products', async(req,res)=>{
@@ -157,7 +157,7 @@ app.post('/payment', async(req,res)=>{
                 acc+= value.price * value.amount;
                 return acc
             },0),
-            status: 'Zaplatena'
+            status: 'created'
         })
         await order.addProducts(cart.map(p=>p.id));
         await order.setCustomer(customer);
@@ -172,5 +172,47 @@ app.get('/advert', async(req,res)=>{
     let advert = await Advert.findOne({
         order: db.random(),
     });
-    return res.status(200).json(advert);
+    return res.status(200).json({id: advert.id, image: advert.image});
+});
+
+app.get('/advert/increment/:id', async(req,res)=>{
+    const {id} = req.params;
+    let advert = await Advert.findOne({
+        where:{id}
+    });
+    advert.counter++;
+    advert.save();
+    return res.status(200).json({link: advert.link});
+});
+
+app.get('/orders', async(req,res)=>{
+    let orders = await Order.findAll({include:[Customer]});
+    return res.status(200).json(orders);
+});
+
+app.put('/order/:id', async(req,res)=>{
+    const {id} = req.params;
+    const {status} = req.body;
+    let order = await Order.findOne({
+        where:{id}
+    });
+    order.status = status;
+    order.save();
+    return res.status(200).json({message: 'Úspešne zmenený stav objednávky'});
+});
+
+app.get('/adverts', async(req,res)=>{
+    let adverts = await Advert.findAll({});
+    return res.status(200).json(adverts);
+});
+
+app.put('/advert/:id', async(req,res)=>{
+    const {id} = req.params;
+    const {link} = req.body;
+    let advert = await Advert.findOne({
+        where:{id}
+    });
+    advert.link = link;
+    advert.save();
+    return res.status(200).json({message: 'Úspešne zmenené presmerovanie reklamy'});
 });
