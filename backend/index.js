@@ -85,18 +85,18 @@ app.listen(3030, ()=>{
 (async function(){
     await db.sync({force: true});
     await Product.create({
-        name: 'Kvetinka',
-        price: 1.89,
-        image: 'hihihi.jpg'
+        name: 'Hnojivo',
+        price: 4.89,
+        image: 'hnojivo.png'
     })
     await Product.create({
         name: 'Kaktus',
         price: 1.50,
-        image: 'kaktus.jpg'
+        image: 'kaktus.png'
     })
     await Product.create({
         name: 'Zemina',
-        price: 1.19,
+        price: 3.19,
         image: 'zemina.png'
     })
     await Product.create({
@@ -118,6 +118,11 @@ app.listen(3030, ()=>{
         name: 'Fúrik',
         price: 65.59,
         image: 'furik.png'
+    })
+    await Product.create({
+        name: 'Krhlička',
+        price: 4.99,
+        image: 'krhla.png'
     })
     await Advert.create({
         link: 'https://ladypopular.sk/',

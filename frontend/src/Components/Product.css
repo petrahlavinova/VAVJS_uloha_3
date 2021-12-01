@@ -2,7 +2,7 @@
     border: 1px dashed #008000;
     color: #00ba00;
     margin: 10px;
-    height: 400px;
+    height: 450px;
     width: 400px;
     padding: 10px;
     padding-bottom: 10px;
@@ -12,3 +12,10 @@
     align-items: center;
 }
 
+.product-pictures{
+    width: 200px;
+    max-width: 200px;
+    height: 250px;
+    max-height: 250px;
+    min-height: 250px;
+}
