@@ -11,12 +11,12 @@
   "author": "Petra Hlavinová",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.24.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mocha": "^9.1.3",
     "mysql2": "^2.3.3",
-    "node-fetch": "^2.6.6",
     "sequelize": "^6.12.0-alpha.1"
   }
 }
